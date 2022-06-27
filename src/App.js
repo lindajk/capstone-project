@@ -27,6 +27,12 @@ export default function App() {
             {event.name}
             {event.dates.start.localDate}
             {event.dates.start.localTime}
+            <img
+              src={event.images[0].url}
+              alt="none"
+              width={event.images[0].width}
+              height={event.images[0].height}
+            ></img>
           </li>
         ))}
       </ul>
