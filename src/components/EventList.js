@@ -100,4 +100,5 @@ const StyledListItemLocation = styled.li`
 
 const LoadMoreButton = styled.button`
   color: black;
+  padding: 0.5rem;
 `;
