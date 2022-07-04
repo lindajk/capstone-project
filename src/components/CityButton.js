@@ -1,11 +1,10 @@
 import {useState} from 'react';
 import styled from 'styled-components';
 
-const options = ['Berlin', 'Düsseldorf', 'Frankfurt', 'Hamburg', 'München'];
+const options = ['All Cities', 'Berlin', 'Cologne', 'Frankfurt', 'Hamburg', 'Munich'];
 
-export default function CityButton() {
+export default function CityButton({selectedOption, setSelectedOption, allEvents}) {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
 
   const toggling = () => setIsOpen(!isOpen);
 
@@ -16,34 +15,30 @@ export default function CityButton() {
   };
 
   return (
-    <Main>
-      <DropDownContainer>
-        <DropDownHeader onClick={toggling}>{selectedOption || 'Stadt wählen'}</DropDownHeader>
-        {isOpen && (
-          <DropDownListContainer>
-            <DropDownList>
-              {options.map(option => (
-                <ListItem onClick={onOptionClicked(option)} key={Math.random()}>
-                  {option}
-                </ListItem>
-              ))}
-            </DropDownList>
-          </DropDownListContainer>
-        )}
-      </DropDownContainer>
-    </Main>
+    <DropDownContainer>
+      <DropDownHeader onClick={toggling}>{selectedOption || 'Choose City'}</DropDownHeader>
+      {isOpen && (
+        <DropDownListContainer>
+          <DropDownList>
+            {options.map(option => (
+              <ListItem
+                onClick={onOptionClicked(option)}
+                onChange={event => setSelectedOption(event.target.value)}
+                key={Math.random()}
+              >
+                {option}
+              </ListItem>
+            ))}
+          </DropDownList>
+        </DropDownListContainer>
+      )}
+    </DropDownContainer>
   );
 }
 
-const Main = styled('div')`
-  font-family: sans-serif;
-  background: #f0f0f0;
-  height: 100vh;
-`;
-
 const DropDownContainer = styled('div')`
-  width: 10.5em;
-  margin: 0 auto;
+  width: 50%;
+  //margin: 0 auto;
 `;
 
 const DropDownHeader = styled('div')`

@@ -1,8 +1,7 @@
 import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 
-export default function EventList() {
-  const [events, setEvents] = useState([]);
+export default function EventList({events, setEvents}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -25,7 +24,7 @@ export default function EventList() {
         setLoading(false);
         setError(err.message);
       });
-  }, []);
+  }, [setEvents]);
 
   return (
     <StyledList role="list">
