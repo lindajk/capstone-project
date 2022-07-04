@@ -4,16 +4,15 @@ import CityButton from './components/CityButton';
 import EventList from './components/EventList';
 
 export default function App() {
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('All Cities');
   const [events, setEvents] = useState([]);
 
-  const filteredByCity = events.filter(data => {
-    return data._embedded.venues[0].city.name === {selectedOption};
-  });
+  function selectEvents(selectedEvent) {
+    setSelectedOption(selectedEvent);
+  }
 
-  function allEvents() {
-    setSelectedOption('All Cities');
-    setEvents(events);
+  function updateEvents(eventsToChoose) {
+    setEvents([...events, ...eventsToChoose]);
   }
 
   return (
@@ -21,9 +20,9 @@ export default function App() {
       <CityButton
         selectedOption={selectedOption}
         setSelectedOption={setSelectedOption}
-        allEvents={allEvents}
+        selectEvents={selectEvents}
       ></CityButton>
-      <EventList events={filteredByCity} setEvents={setEvents}></EventList>;
+      <EventList selectedOption={selectedOption} events={events} updateEvents={updateEvents}></EventList>
     </main>
   );
 }

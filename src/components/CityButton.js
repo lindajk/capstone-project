@@ -1,31 +1,25 @@
 import {useState} from 'react';
 import styled from 'styled-components';
 
-const options = ['All Cities', 'Berlin', 'Cologne', 'Frankfurt', 'Hamburg', 'Munich'];
+const options = ['All Cities', 'Berlin', 'Cologne', 'Frankfurt am Main', 'Hamburg', 'Munich'];
 
-export default function CityButton({selectedOption, setSelectedOption, allEvents}) {
+export default function CityButton({selectedOption, selectEvents}) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const toggling = () => setIsOpen(!isOpen);
-
-  const onOptionClicked = value => () => {
-    setSelectedOption(value);
-    setIsOpen(false);
-    console.log(selectedOption);
+  const toggleOpen = () => setIsOpen(!isOpen);
+  const onEvent = city => {
+    selectEvents(city);
+    toggleOpen();
   };
 
   return (
     <DropDownContainer>
-      <DropDownHeader onClick={toggling}>{selectedOption || 'Choose City'}</DropDownHeader>
+      <DropDownHeader onClick={toggleOpen}>{selectedOption || 'Choose City'}</DropDownHeader>
       {isOpen && (
         <DropDownListContainer>
           <DropDownList>
             {options.map(option => (
-              <ListItem
-                onClick={onOptionClicked(option)}
-                onChange={event => setSelectedOption(event.target.value)}
-                key={Math.random()}
-              >
+              <ListItem onClick={() => onEvent(option)} key={Math.random()}>
                 {option}
               </ListItem>
             ))}
