@@ -50,7 +50,7 @@ export default function EventList({events, updateEvents, selectedOption}) {
           </StyledListItemContainer>
         </StyledListCard>
       ))}
-      <button onClick={loadMoreEvents}>Weitere anzeigen</button>
+      <LoadMoreButton onClick={loadMoreEvents}>Weitere anzeigen</LoadMoreButton>
     </StyledList>
   );
 }
@@ -96,4 +96,8 @@ const StyledListItemCity = styled.li`
 const StyledListItemLocation = styled.li`
   font-style: italic;
   font-size: medium;
+`;
+
+const LoadMoreButton = styled.button`
+  color: black;
 `;
