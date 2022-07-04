@@ -32,7 +32,6 @@ export default function CityButton({selectedOption, selectEvents}) {
 
 const DropDownContainer = styled.div`
   width: 50%;
-  //margin: 0 auto;
 `;
 
 const DropDownHeader = styled.div`
