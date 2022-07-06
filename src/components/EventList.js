@@ -1,23 +1,18 @@
 import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 
-export default function EventList() {
-  const [events, setEvents] = useState([]);
+export default function EventList({events, updateEvents, selectedLocation}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  useEffect(() => {
+  const [loadedPage, setLoadedPage] = useState(0);
+  const fetchEvent = page => {
     fetch(
-      'https://app.ticketmaster.com/discovery/v2/events.json?countryCode=DE&startDateTime=2022-07-01T14:00:00Z&endDateTime=2022-12-31T14:00:00Z&sort=date,asc&apikey=5I30P7cDjRjyvGDo67WGAE2BhhTwRxXt'
+      `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=DE&page=${page}&sort=date,asc&apikey=5I30P7cDjRjyvGDo67WGAE2BhhTwRxXt`
     )
-      .then(response => {
-        if (!response.ok) {
-          throw Error('NetworkError when attempting to fetch resource');
-        }
-        return response.json();
-      })
+      .then(response => response.json())
       .then(data => {
-        setEvents(data._embedded.events);
+        updateEvents(data._embedded.events);
+        setLoadedPage(loadedPage + 1);
         setLoading(false);
         setError(null);
       })
@@ -25,13 +20,24 @@ export default function EventList() {
         setLoading(false);
         setError(err.message);
       });
-  }, []);
+  };
 
+  useEffect(() => {
+    fetchEvent(loadedPage);
+  }, [loadedPage]);
+  const loadMoreEvents = () => {
+    fetchEvent(loadedPage);
+  };
+
+  const filteredEvents = events.filter(
+    event => selectedLocation === 'All Cities' || event._embedded.venues[0].city.name === selectedLocation
+  );
+  console.log(error);
   return (
     <StyledList role="list">
       {error && <div>{error}</div>}
       {loading && <div> Data is Loading...</div>}
-      {events.map(event => (
+      {filteredEvents.map(event => (
         <StyledListCard key={event.id}>
           <img src={event.images[0].url} alt="none" width="120" height="90"></img>
           <StyledListItemContainer>
@@ -44,6 +50,7 @@ export default function EventList() {
           </StyledListItemContainer>
         </StyledListCard>
       ))}
+      <LoadMoreButton onClick={loadMoreEvents}>Weitere anzeigen</LoadMoreButton>
     </StyledList>
   );
 }
@@ -89,4 +96,9 @@ const StyledListItemCity = styled.li`
 const StyledListItemLocation = styled.li`
   font-style: italic;
   font-size: medium;
+`;
+
+const LoadMoreButton = styled.button`
+  color: black;
+  padding: 0.5rem;
 `;
