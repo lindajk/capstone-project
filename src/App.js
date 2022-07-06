@@ -1,14 +1,41 @@
 import {useState} from 'react';
 
-import CityButton from './components/CityButton';
 import EventList from './components/EventList';
+import FilterButton from './components/FilterButton';
 
 export default function App() {
-  const [selectedOption, setSelectedOption] = useState('All Cities');
+  const [selectedLocation, setSelectedLocation] = useState('All Cities');
   const [events, setEvents] = useState([]);
 
+  const locations = [
+    {
+      id: 1,
+      name: 'All Cities',
+    },
+    {
+      id: 2,
+      name: 'Berlin',
+    },
+    {
+      id: 3,
+      name: 'Cologne',
+    },
+    {
+      id: 4,
+      name: 'Frankfurt am Main',
+    },
+    {
+      id: 5,
+      name: 'Hamburg',
+    },
+    {
+      id: 6,
+      name: 'Munich',
+    },
+  ];
+
   function selectEvents(selectedEvent) {
-    setSelectedOption(selectedEvent);
+    setSelectedLocation(selectedEvent);
   }
 
   function updateEvents(eventsToChoose) {
@@ -17,12 +44,8 @@ export default function App() {
 
   return (
     <main className="App">
-      <CityButton
-        selectedOption={selectedOption}
-        setSelectedOption={setSelectedOption}
-        selectEvents={selectEvents}
-      ></CityButton>
-      <EventList selectedOption={selectedOption} events={events} updateEvents={updateEvents}></EventList>
+      <FilterButton options={locations} selectedOption={selectedLocation} selectEvents={selectEvents}></FilterButton>
+      <EventList selectedLocation={selectedLocation} events={events} updateEvents={updateEvents}></EventList>
     </main>
   );
 }

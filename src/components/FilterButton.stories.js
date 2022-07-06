@@ -1,4 +1,4 @@
-import CityButton from './CityButton.js';
+import CityButton from './FilterButton.js';
 
 export default {
   title: 'Components/CityButton',

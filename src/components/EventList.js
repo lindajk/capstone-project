@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 
-export default function EventList({events, updateEvents, selectedOption}) {
+export default function EventList({events, updateEvents, selectedLocation}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [loadedPage, setLoadedPage] = useState(0);
@@ -24,13 +24,13 @@ export default function EventList({events, updateEvents, selectedOption}) {
 
   useEffect(() => {
     fetchEvent(loadedPage);
-  }, []);
+  }, [loadedPage]);
   const loadMoreEvents = () => {
     fetchEvent(loadedPage);
   };
 
   const filteredEvents = events.filter(
-    event => selectedOption === 'All Cities' || event._embedded.venues[0].city.name === selectedOption
+    event => selectedLocation === 'All Cities' || event._embedded.venues[0].city.name === selectedLocation
   );
   console.log(error);
   return (
