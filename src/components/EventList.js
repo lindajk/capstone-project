@@ -47,6 +47,7 @@ export default function EventList({events, updateEvents, selectedLocation}) {
               {event.dates.start.localDate} {event.dates.start.localTime}
             </li>
             <StyledListItemLocation>{event._embedded.venues[0].address.line1}</StyledListItemLocation>
+            <StyledListItemSegment>Category: {event.classifications[0].segment.name}</StyledListItemSegment>
           </StyledListItemContainer>
         </StyledListCard>
       ))}
@@ -94,8 +95,12 @@ const StyledListItemCity = styled.li`
 `;
 
 const StyledListItemLocation = styled.li`
+  font-size: medium;
+`;
+const StyledListItemSegment = styled.li`
   font-style: italic;
   font-size: medium;
+  color: grey;
 `;
 
 const LoadMoreButton = styled.button`

@@ -1,12 +1,12 @@
 import {useState} from 'react';
 import styled from 'styled-components';
 
-export default function FilterButton({selectedOption, selectEvents, options}) {
+export default function FilterByDate({selectedOption, selectEventsByDate, options}) {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = () => setIsOpen(!isOpen);
-  const onEvent = city => {
-    selectEvents(city);
+  const onEvent = date => {
+    selectEventsByDate(date);
     toggleOpen();
   };
 

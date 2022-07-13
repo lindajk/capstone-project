@@ -1,10 +1,15 @@
 import {useState} from 'react';
+import styled from 'styled-components';
 
 import EventList from './components/EventList';
-import FilterButton from './components/FilterButton';
+import FilterByCat from './components/FilterByCat';
+import FilterByCity from './components/FilterByCity';
+import FilterByDate from './components/FilterByDate';
 
 export default function App() {
   const [selectedLocation, setSelectedLocation] = useState('All Cities');
+  const [selectedDate, setSelectedDate] = useState('All Upcoming Events');
+  const [selectedCat, setSelectedCat] = useState('All Categories');
   const [events, setEvents] = useState([]);
 
   const locations = [
@@ -34,8 +39,46 @@ export default function App() {
     },
   ];
 
-  function selectEvents(selectedEvent) {
+  const dates = [
+    {
+      id: 1,
+      name: 'All Upcoming Events',
+    },
+    {
+      id: 2,
+      name: 'Today',
+    },
+    {
+      id: 3,
+      name: 'Tomorrow',
+    },
+  ];
+
+  const categories = [
+    {
+      id: 1,
+      name: 'All Categories',
+    },
+    {
+      id: 2,
+      name: 'Music',
+    },
+    {
+      id: 3,
+      name: 'Miscellaneous',
+    },
+  ];
+
+  function selectEventsByLocation(selectedEvent) {
     setSelectedLocation(selectedEvent);
+  }
+
+  function selectEventsByDate(selectedEvent) {
+    setSelectedDate(selectedEvent);
+  }
+
+  function selectEventsByCat(selectedEvent) {
+    setSelectedCat(selectedEvent);
   }
 
   function updateEvents(eventsToChoose) {
@@ -44,8 +87,29 @@ export default function App() {
 
   return (
     <main className="App">
-      <FilterButton options={locations} selectedOption={selectedLocation} selectEvents={selectEvents}></FilterButton>
+      <FilterContainer>
+        <FilterByCity
+          options={locations}
+          selectedOption={selectedLocation}
+          selectEventsByLocation={selectEventsByLocation}
+        ></FilterByCity>
+        <FilterByDate
+          options={dates}
+          selectedOption={selectedDate}
+          selectEventsByDate={selectEventsByDate}
+        ></FilterByDate>
+        <FilterByCat
+          options={categories}
+          selectedOption={selectedCat}
+          selectEventsByCat={selectEventsByCat}
+        ></FilterByCat>
+      </FilterContainer>
       <EventList selectedLocation={selectedLocation} events={events} updateEvents={updateEvents}></EventList>
     </main>
   );
 }
+
+const FilterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
