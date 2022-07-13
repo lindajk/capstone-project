@@ -128,6 +128,7 @@ export default function App() {
 
   return (
     <main className="App">
+
       <FilterContainer>
         <FilterByCity
           options={locations}
@@ -146,6 +147,10 @@ export default function App() {
         ></FilterByCat>
       </FilterContainer>
       <EventList selectedFilter={selectedFilter} events={events} updateEvents={updateEvents}></EventList>
+      <FilterButtons>
+        <FilterButton options={locations} selectedOption={selectedLocation} selectEvents={selectEvents}></FilterButton>
+      </FilterButtons>
+      <EventList selectedLocation={selectedLocation} events={events} updateEvents={updateEvents}></EventList>
     </main>
   );
 }
@@ -154,4 +159,8 @@ const FilterContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+
+const FilterButtons = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
