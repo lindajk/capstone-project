@@ -11,36 +11,22 @@ export default function FilterByCat({selectedOption, selectEventsByCat, options}
   };
 
   return (
-    <DropDownContainer>
-      <DropDownList name={selectedOption}>
-        {options.map(({name, id}) => (
-          <ListItem onClick={() => onEvent(name)} key={id}>
-            {name}
-          </ListItem>
-        ))}
-      </DropDownList>
-    </DropDownContainer>
+    <DropDownList name={selectedOption}>
+      {options.map(({name, id}) => (
+        <ListItem onClick={() => onEvent(name)} key={id}>
+          {name}
+        </ListItem>
+      ))}
+    </DropDownList>
   );
 }
 
-const DropDownContainer = styled.div`
-  width: 50%;
-`;
-
 const DropDownList = styled.select`
-  padding: 0 0 0 1em;
   background: white;
-  border: 2px solid lightgrey;
-  box-sizing: border-box;
-  color: blue;
-  font-size: 1.3rem;
-  font-weight: 500;
-  &:first-child {
-    padding-top: 0.8em;
-  }
+  text-align: center;
 `;
 
 const ListItem = styled.option`
   list-style: none;
-  margin-bottom: 0.8em;
+  text-align: center;
 `;

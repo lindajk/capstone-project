@@ -7,9 +7,20 @@ import FilterByCity from './components/FilterByCity';
 import FilterByDate from './components/FilterByDate';
 
 export default function App() {
-  const [selectedLocation, setSelectedLocation] = useState('All Cities');
-  const [selectedDate, setSelectedDate] = useState('All Upcoming Events');
-  const [selectedCat, setSelectedCat] = useState('All Categories');
+  const [selectedFilter, setSelectedFilter] = useState([
+    {
+      searchKey: 'city',
+      searchValue: 'all',
+    },
+    {
+      searchKey: 'date',
+      searchValue: 'all',
+    },
+    {
+      searchKey: 'category',
+      searchValue: 'all',
+    },
+  ]);
   const [events, setEvents] = useState([]);
 
   const locations = [
@@ -42,7 +53,7 @@ export default function App() {
   const dates = [
     {
       id: 1,
-      name: 'All Upcoming Events',
+      name: 'Upcoming Events',
     },
     {
       id: 2,
@@ -69,16 +80,46 @@ export default function App() {
     },
   ];
 
-  function selectEventsByLocation(selectedEvent) {
-    setSelectedLocation(selectedEvent);
+  function selectEventsByLocation(selectedLocation) {
+    const notToFilter = selectedFilter.filter(filterObject => filterObject.searchKey !== 'city');
+    const newFilterArray = [
+      ...notToFilter,
+      {searchKey: 'city', searchValue: selectedLocation === 'All Cities' ? 'all' : selectedLocation},
+    ];
+    setSelectedFilter(newFilterArray);
   }
 
-  function selectEventsByDate(selectedEvent) {
-    setSelectedDate(selectedEvent);
+  function selectEventsByDate(selectedDate) {
+    const actualDate = translateDate(selectedDate);
+    function translateDate(dateToTranslate) {
+      const date = new Date();
+      if (dateToTranslate === 'Today') {
+        return `${date.getFullYear()}-${
+          (date.getMonth() + 1).toString().length > 1 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1).toString()
+        }-${date.getDate()}`;
+      } else if (dateToTranslate === 'Tomorrow') {
+        return `${date.getFullYear()}-${
+          (date.getMonth() + 1).toString().length > 1 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1).toString()
+        }-${date.getDate() + 1}`;
+      } else {
+        return dateToTranslate;
+      }
+    }
+    const notToFilter = selectedFilter.filter(filterObject => filterObject.searchKey !== 'date');
+    const newFilterArray = [
+      ...notToFilter,
+      {searchKey: 'date', searchValue: actualDate === 'Upcoming Events' ? 'all' : actualDate},
+    ];
+    setSelectedFilter(newFilterArray);
   }
 
-  function selectEventsByCat(selectedEvent) {
-    setSelectedCat(selectedEvent);
+  function selectEventsByCat(selectedCat) {
+    const notToFilter = selectedFilter.filter(filterObject => filterObject.searchKey !== 'category');
+    const newFilterArray = [
+      ...notToFilter,
+      {searchKey: 'category', searchValue: selectedCat === 'All Categories' ? 'all' : selectedCat},
+    ];
+    setSelectedFilter(newFilterArray);
   }
 
   function updateEvents(eventsToChoose) {
@@ -90,26 +131,27 @@ export default function App() {
       <FilterContainer>
         <FilterByCity
           options={locations}
-          selectedOption={selectedLocation}
+          selectedFilter={selectedFilter}
           selectEventsByLocation={selectEventsByLocation}
         ></FilterByCity>
         <FilterByDate
           options={dates}
-          selectedOption={selectedDate}
+          selectedFilter={selectedFilter}
           selectEventsByDate={selectEventsByDate}
         ></FilterByDate>
         <FilterByCat
           options={categories}
-          selectedOption={selectedCat}
+          selectedFilter={selectedFilter}
           selectEventsByCat={selectEventsByCat}
         ></FilterByCat>
       </FilterContainer>
-      <EventList selectedLocation={selectedLocation} events={events} updateEvents={updateEvents}></EventList>
+      <EventList selectedFilter={selectedFilter} events={events} updateEvents={updateEvents}></EventList>
     </main>
   );
 }
 
 const FilterContainer = styled.div`
+  width: 100%;
   display: flex;
   justify-content: center;
 `;
