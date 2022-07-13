@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 
-export default function EventList({events, updateEvents, selectedLocation}) {
+export default function EventList({events, updateEvents, selectedFilter}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [loadedPage, setLoadedPage] = useState(0);
@@ -11,45 +11,69 @@ export default function EventList({events, updateEvents, selectedLocation}) {
     )
       .then(response => response.json())
       .then(data => {
-        updateEvents(data._embedded.events);
+        const eventsToSet = data._embedded.events.map(event => {
+          const newEventObject = {
+            id: event.id,
+            image: event.images[0].url,
+            name: event.name,
+            city: event._embedded.venues[0].city.name,
+            date: event.dates.start.localDate,
+            time: event.dates.start.localTime,
+            address:
+              typeof event._embedded.venues[0].address === 'undefined' ? '' : event._embedded.venues[0].address.line1,
+            category: event.classifications[0].segment.name,
+            isBookmarked: false,
+          };
+          return newEventObject;
+        });
+        updateEvents(eventsToSet);
         setLoadedPage(loadedPage + 1);
         setLoading(false);
         setError(null);
       })
       .catch(err => {
         setLoading(false);
-        setError(err.message);
+        //  setError(err.message);
       });
   };
 
   useEffect(() => {
     fetchEvent(loadedPage);
   }, [loadedPage]);
+
   const loadMoreEvents = () => {
     fetchEvent(loadedPage);
   };
 
-  const filteredEvents = events.filter(
-    event => selectedLocation === 'All Cities' || event._embedded.venues[0].city.name === selectedLocation
-  );
-  console.log(error);
+  function filterArray(arrayToFilter, searchObjects = []) {
+    return arrayToFilter.filter(data => {
+      return searchObjects.every(
+        searchObject => searchObject.searchValue === 'all' || data[searchObject.searchKey] === searchObject.searchValue
+      );
+    });
+  }
+  const filteredEvents = filterArray(events, selectedFilter);
+
   return (
     <StyledList role="list">
       {error && <div>{error}</div>}
       {loading && <div> Data is Loading...</div>}
-      {filteredEvents.map(event => (
-        <StyledListCard key={event.id}>
-          <img src={event.images[0].url} alt="none" width="120" height="90"></img>
-          <StyledListItemContainer>
-            <StyledListItemEventName>{event.name}</StyledListItemEventName>
-            <StyledListItemCity>{event._embedded.venues[0].city.name}</StyledListItemCity>
-            <li>
-              {event.dates.start.localDate} {event.dates.start.localTime}
-            </li>
-            <StyledListItemLocation>{event._embedded.venues[0].address.line1}</StyledListItemLocation>
-          </StyledListItemContainer>
-        </StyledListCard>
-      ))}
+      {filteredEvents.map(event => {
+        return (
+          <StyledListCard key={event.id}>
+            <img src={event.image} alt="none" width="120" height="90"></img>
+            <StyledListItemContainer>
+              <StyledListItemEventName>{event.name}</StyledListItemEventName>
+              <StyledListItemCity>{event.city}</StyledListItemCity>
+              <li>
+                {event.date} {event.time}
+              </li>
+              <StyledListItemLocation>{event.address}</StyledListItemLocation>
+              <StyledListItemSegment>Category: {event.category}</StyledListItemSegment>
+            </StyledListItemContainer>
+          </StyledListCard>
+        );
+      })}
       <LoadMoreButton onClick={loadMoreEvents}>Weitere anzeigen</LoadMoreButton>
     </StyledList>
   );
@@ -94,8 +118,12 @@ const StyledListItemCity = styled.li`
 `;
 
 const StyledListItemLocation = styled.li`
+  font-size: medium;
+`;
+const StyledListItemSegment = styled.li`
   font-style: italic;
   font-size: medium;
+  color: grey;
 `;
 
 const LoadMoreButton = styled.button`
