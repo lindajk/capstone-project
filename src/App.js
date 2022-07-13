@@ -158,9 +158,5 @@ export default function App() {
 const FilterContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: center`;
 
-const FilterButtons = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
