@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import styled from 'styled-components';
 
 import EventList from './components/EventList';
 import FilterButton from './components/FilterButton';
@@ -44,8 +45,15 @@ export default function App() {
 
   return (
     <main className="App">
-      <FilterButton options={locations} selectedOption={selectedLocation} selectEvents={selectEvents}></FilterButton>
+      <FilterButtons>
+        <FilterButton options={locations} selectedOption={selectedLocation} selectEvents={selectEvents}></FilterButton>
+      </FilterButtons>
       <EventList selectedLocation={selectedLocation} events={events} updateEvents={updateEvents}></EventList>
     </main>
   );
 }
+
+const FilterButtons = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
