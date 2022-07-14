@@ -24,6 +24,7 @@ export default function FilterByCat({selectedOption, selectEventsByCat, options}
 const DropDownList = styled.select`
   background: white;
   text-align: center;
+  grid-column-start: 3;
 `;
 
 const ListItem = styled.option`

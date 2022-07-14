@@ -142,8 +142,8 @@ export default function App() {
   return (
     <main className="App">
       <Header>
-        <BookmarkButton>Event List</BookmarkButton>
-        <BookmarkButton>Bookmarks</BookmarkButton>
+        <EventlistButton>Event List</EventlistButton>
+        <NavigationButton>Bookmarks</NavigationButton>
       </Header>
       <FilterContainer>
         <FilterByCity
@@ -168,20 +168,29 @@ export default function App() {
 }
 
 const Header = styled.header`
-  background-color: black;
+  background-color: lightgrey;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  padding: 0 2rem;
 `;
 
-const BookmarkButton = styled.button`
+const EventlistButton = styled.button`
   margin: 10px;
   height: 2rem;
-  grid-column-start: 3;
+  background-color: darkgoldenrod;
+  color: white;
+  width: 10rem;
+`;
+
+const NavigationButton = styled.button`
+  margin: 10px;
+  height: 2rem;
+  width: 10rem;
+  color: grey;
 `;
 
 const FilterContainer = styled.div`
-  width: 90%;
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 3;
 `;
