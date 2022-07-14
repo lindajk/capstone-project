@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import {MdOutlineBookmarks} from 'react-icons/md';
 import styled from 'styled-components';
 
 import EventList from './components/EventList';
@@ -53,7 +54,7 @@ export default function App() {
   const dates = [
     {
       id: 1,
-      name: 'All Events',
+      name: 'All Dates',
     },
     {
       id: 2,
@@ -120,7 +121,7 @@ export default function App() {
     const notToFilter = selectedFilter.filter(filterObject => filterObject.searchKey !== 'date');
     const newFilterArray = [
       ...notToFilter,
-      {searchKey: 'date', searchValue: actualDate === 'All Events' ? 'all' : actualDate},
+      {searchKey: 'date', searchValue: actualDate === 'All Dates' ? 'all' : actualDate},
     ];
     setSelectedFilter(newFilterArray);
   }
@@ -140,7 +141,10 @@ export default function App() {
 
   return (
     <main className="App">
-      <Header>EventApp</Header>
+      <Header>
+        <BookmarkButton>Event List</BookmarkButton>
+        <BookmarkButton>Bookmarks</BookmarkButton>
+      </Header>
       <FilterContainer>
         <FilterByCity
           options={locations}
@@ -164,15 +168,20 @@ export default function App() {
 }
 
 const Header = styled.header`
-  font-size: large;
-  text-align: center;
   background-color: black;
-  color: white;
-  padding: 0.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+`;
+
+const BookmarkButton = styled.button`
+  margin: 10px;
+  height: 2rem;
+  grid-column-start: 3;
 `;
 
 const FilterContainer = styled.div`
-  width: 92%;
+  width: 90%;
   display: flex;
   justify-content: center;
 `;

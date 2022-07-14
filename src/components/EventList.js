@@ -1,5 +1,5 @@
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useEffect, useState} from 'react';
+import {FaRegBookmark} from 'react-icons/fa';
 import styled from 'styled-components';
 
 export default function EventList({events, updateEvents, selectedFilter}) {
@@ -72,7 +72,7 @@ export default function EventList({events, updateEvents, selectedFilter}) {
               <StyledListItemLocation>{event.address}</StyledListItemLocation>
               <StyledListItemSegment>Category: {event.category}</StyledListItemSegment>
             </StyledListItemContainer>
-            <AddButton>+</AddButton>
+            <FaRegBookmark></FaRegBookmark>
           </StyledListCard>
         );
       })}
@@ -101,7 +101,7 @@ const StyledListItemContainer = styled.ul`
 const StyledListCard = styled.ul`
   border: 1px solid #000;
   display: grid;
-  grid-template-columns: 130px auto 5px;
+  grid-template-columns: 120px 220px auto;
   margin: 0.2rem;
   padding: 0.2rem 2rem 0.2rem 0.2rem;
   img {
