@@ -53,7 +53,7 @@ export default function App() {
   const dates = [
     {
       id: 1,
-      name: 'All Events',
+      name: 'Upcoming Events',
     },
     {
       id: 2,
@@ -62,10 +62,6 @@ export default function App() {
     {
       id: 3,
       name: 'Tomorrow',
-    },
-    {
-      id: 4,
-      name: 'Day after Tomorrow',
     },
   ];
 
@@ -81,10 +77,6 @@ export default function App() {
     {
       id: 3,
       name: 'Miscellaneous',
-    },
-    {
-      id: 4,
-      name: 'Arts & Theatre',
     },
   ];
 
@@ -109,10 +101,6 @@ export default function App() {
         return `${date.getFullYear()}-${
           (date.getMonth() + 1).toString().length > 1 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1).toString()
         }-${date.getDate() + 1}`;
-      } else if (dateToTranslate === 'Day after Tomorrow') {
-        return `${date.getFullYear()}-${
-          (date.getMonth() + 1).toString().length > 1 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1).toString()
-        }-${date.getDate() + 2}`;
       } else {
         return dateToTranslate;
       }
@@ -120,7 +108,7 @@ export default function App() {
     const notToFilter = selectedFilter.filter(filterObject => filterObject.searchKey !== 'date');
     const newFilterArray = [
       ...notToFilter,
-      {searchKey: 'date', searchValue: actualDate === 'All Events' ? 'all' : actualDate},
+      {searchKey: 'date', searchValue: actualDate === 'Upcoming Events' ? 'all' : actualDate},
     ];
     setSelectedFilter(newFilterArray);
   }
@@ -140,7 +128,6 @@ export default function App() {
 
   return (
     <main className="App">
-      <Header>EventApp</Header>
       <FilterContainer>
         <FilterByCity
           options={locations}
@@ -163,16 +150,8 @@ export default function App() {
   );
 }
 
-const Header = styled.header`
-  font-size: large;
-  text-align: center;
-  background-color: black;
-  color: white;
-  padding: 0.5rem;
-`;
-
 const FilterContainer = styled.div`
-  width: 92%;
+  width: 100%;
   display: flex;
   justify-content: center;
 `;

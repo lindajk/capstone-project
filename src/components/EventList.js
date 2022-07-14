@@ -1,3 +1,4 @@
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {useEffect, useState} from 'react';
 import styled from 'styled-components';
 
@@ -71,6 +72,7 @@ export default function EventList({events, updateEvents, selectedFilter}) {
               <StyledListItemLocation>{event.address}</StyledListItemLocation>
               <StyledListItemSegment>Category: {event.category}</StyledListItemSegment>
             </StyledListItemContainer>
+            <AddButton>+</AddButton>
           </StyledListCard>
         );
       })}
@@ -82,7 +84,6 @@ export default function EventList({events, updateEvents, selectedFilter}) {
 const StyledList = styled.ul`
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -91,6 +92,7 @@ const StyledList = styled.ul`
 const StyledListItemContainer = styled.ul`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -98,8 +100,8 @@ const StyledListItemContainer = styled.ul`
 
 const StyledListCard = styled.ul`
   border: 1px solid #000;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 130px auto 5px;
   margin: 0.2rem;
   padding: 0.2rem 2rem 0.2rem 0.2rem;
   img {
@@ -111,6 +113,10 @@ const StyledListCard = styled.ul`
 
 const StyledListItemEventName = styled.li`
   font-weight: bold;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `;
 
 const StyledListItemCity = styled.li`
@@ -126,7 +132,11 @@ const StyledListItemSegment = styled.li`
   color: grey;
 `;
 
+const AddButton = styled.button`
+  color: black;
+  width: 2rem;
+  height: 2rem;
+`;
 const LoadMoreButton = styled.button`
   color: black;
-  padding: 0.5rem;
 `;
