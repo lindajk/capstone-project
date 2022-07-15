@@ -42,10 +42,6 @@ export default function EventList({events, updateEvents, selectedFilter}) {
     fetchEvent(loadedPage);
   }, [loadedPage]);
 
-  const loadMoreEvents = () => {
-    fetchEvent(loadedPage);
-  };
-
   function filterArray(arrayToFilter, searchObjects = []) {
     return arrayToFilter.filter(data => {
       return searchObjects.every(
@@ -76,7 +72,6 @@ export default function EventList({events, updateEvents, selectedFilter}) {
           </StyledListCard>
         );
       })}
-      <LoadMoreButton onClick={loadMoreEvents}>Weitere anzeigen</LoadMoreButton>
     </StyledList>
   );
 }

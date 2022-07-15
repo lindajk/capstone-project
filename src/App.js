@@ -77,7 +77,7 @@ export default function App() {
     },
     {
       id: 2,
-      name: 'Music',
+      name: 'Arts & Theatre',
     },
     {
       id: 3,
@@ -85,7 +85,11 @@ export default function App() {
     },
     {
       id: 4,
-      name: 'Arts & Theatre',
+      name: 'Music',
+    },
+    {
+      id: 4,
+      name: 'Sports',
     },
   ];
 
