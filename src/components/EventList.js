@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {FaRegBookmark} from 'react-icons/fa';
+import {FaBookmark} from 'react-icons/fa';
 import styled from 'styled-components';
 
 export default function EventList({events, updateEvents, selectedFilter}) {
@@ -51,6 +52,10 @@ export default function EventList({events, updateEvents, selectedFilter}) {
   }
   const filteredEvents = filterArray(events, selectedFilter);
 
+  function myFunction() {
+    var x = document.getElementById('myDIV');
+  }
+
   return (
     <StyledList role="list">
       {error && <div>{error}</div>}
@@ -68,7 +73,8 @@ export default function EventList({events, updateEvents, selectedFilter}) {
               <StyledListItemLocation>{event.address}</StyledListItemLocation>
               <StyledListItemSegment>Category: {event.category}</StyledListItemSegment>
             </StyledListItemContainer>
-            <FaRegBookmark></FaRegBookmark>
+            <FaRegBookmark onClick="myFunction()"></FaRegBookmark>
+            <FaBookmark id="myID"></FaBookmark>
           </StyledListCard>
         );
       })}
@@ -110,7 +116,7 @@ const StyledListItemEventName = styled.li`
   font-weight: bold;
   overflow: hidden;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 `;
 
@@ -125,13 +131,4 @@ const StyledListItemSegment = styled.li`
   font-style: italic;
   font-size: medium;
   color: grey;
-`;
-
-const AddButton = styled.button`
-  color: black;
-  width: 2rem;
-  height: 2rem;
-`;
-const LoadMoreButton = styled.button`
-  color: black;
 `;

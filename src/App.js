@@ -1,5 +1,4 @@
 import {useState} from 'react';
-import {MdOutlineBookmarks} from 'react-icons/md';
 import styled from 'styled-components';
 
 import EventList from './components/EventList';
