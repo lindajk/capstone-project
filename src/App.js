@@ -153,11 +153,11 @@ export default function App() {
   return (
     <main className="App">
       <Header>
-        <EventlistButton showBookmarked onClick={() => setShowBookmarked(false)}>
+        <EventlistButton bookmarked={showBookmarked} onClick={() => setShowBookmarked(false)}>
           Event List
         </EventlistButton>
         <Logo>EventNavi</Logo>
-        <NavigationButton showBookmarkednp onClick={() => setShowBookmarked(true)}>
+        <NavigationButton bookmarked={showBookmarked} onClick={() => setShowBookmarked(true)}>
           Bookmarks
         </NavigationButton>
       </Header>
@@ -209,16 +209,16 @@ const EventlistButton = styled.button`
   margin: 10px;
   height: 2rem;
   width: 15rem;
-  background-color: ${props => (props.isBookmarked === true ? 'grey' : 'blue')};
-  color: ${props => (props.isBookmarked === true ? 'darkgrey' : 'white')};
+  background-color: ${props => (props.bookmarked ? 'grey' : 'blue')};
+  color: ${props => (props.bookmarked ? 'darkgrey' : 'white')};
 `;
 
 const NavigationButton = styled.button`
   margin: 10px;
   height: 2rem;
   width: 15rem;
-  background-color: ${props => (props.isBookmarked === true ? 'grey' : 'blue')};
-  color: ${props => (props.isBookmarked === true ? 'darkgrey' : 'white')};
+  background-color: ${props => (props.bookmarked ? 'blue' : 'grey')};
+  color: ${props => (props.bookmarked ? 'white' : 'darkgrey')};
 `;
 
 const FilterContainer = styled.div`
