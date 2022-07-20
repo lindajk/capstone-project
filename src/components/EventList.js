@@ -3,7 +3,7 @@ import {FaRegBookmark} from 'react-icons/fa';
 import {FaBookmark} from 'react-icons/fa';
 import styled from 'styled-components';
 
-export default function EventList({events, updateEvents, selectedFilter}) {
+export default function EventList({events, updateEvents, selectedFilter, onBookmark, showBookmarked}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [loadedPage, setLoadedPage] = useState(0);
@@ -50,11 +50,9 @@ export default function EventList({events, updateEvents, selectedFilter}) {
       );
     });
   }
-  const filteredEvents = filterArray(events, selectedFilter);
-
-  function myFunction() {
-    var x = document.getElementById('myDIV');
-  }
+  const filteredEvents = showBookmarked
+    ? events.filter(event => event.isBookmarked)
+    : filterArray(events, selectedFilter);
 
   return (
     <StyledList role="list">
@@ -73,8 +71,9 @@ export default function EventList({events, updateEvents, selectedFilter}) {
               <StyledListItemLocation>{event.address}</StyledListItemLocation>
               <StyledListItemSegment>Category: {event.category}</StyledListItemSegment>
             </StyledListItemContainer>
-            <FaRegBookmark onClick="myFunction()"></FaRegBookmark>
-            <FaBookmark id="myID"></FaBookmark>
+            <div onClick={() => onBookmark(event.id)}>
+              {event.isBookmarked ? <FaBookmark></FaBookmark> : <FaRegBookmark></FaRegBookmark>}
+            </div>
           </StyledListCard>
         );
       })}

@@ -22,6 +22,7 @@ export default function App() {
     },
   ]);
   const [events, setEvents] = useState([]);
+  const [showBookmarked, setShowBookmarked] = useState(false);
 
   const locations = [
     {
@@ -142,30 +143,51 @@ export default function App() {
     setEvents([...events, ...eventsToChoose]);
   }
 
+  function handleBookmark(idToBookmark) {
+    const index = events.findIndex(event => event.id === idToBookmark);
+    const eventToBookmark = events.find(event => event.id === idToBookmark);
+    const bookmarkedEvent = {...eventToBookmark, isBookmarked: !eventToBookmark.isBookmarked};
+    const newEvents = [...events.slice(0, index), bookmarkedEvent, ...events.slice(index + 1)];
+    setEvents(newEvents);
+  }
   return (
     <main className="App">
       <Header>
-        <EventlistButton>Event List</EventlistButton>
-        <NavigationButton>Bookmarks</NavigationButton>
+        <EventlistButton showBookmarked onClick={() => setShowBookmarked(false)}>
+          Event List
+        </EventlistButton>
+        <Logo>EventNavi</Logo>
+        <NavigationButton showBookmarkednp onClick={() => setShowBookmarked(true)}>
+          Bookmarks
+        </NavigationButton>
       </Header>
-      <FilterContainer>
-        <FilterByCity
-          options={locations}
-          selectedFilter={selectedFilter}
-          selectEventsByLocation={selectEventsByLocation}
-        ></FilterByCity>
-        <FilterByDate
-          options={dates}
-          selectedFilter={selectedFilter}
-          selectEventsByDate={selectEventsByDate}
-        ></FilterByDate>
-        <FilterByCat
-          options={categories}
-          selectedFilter={selectedFilter}
-          selectEventsByCat={selectEventsByCat}
-        ></FilterByCat>
-      </FilterContainer>
-      <EventList selectedFilter={selectedFilter} events={events} updateEvents={updateEvents}></EventList>
+      {!showBookmarked && (
+        <FilterContainer>
+          <FilterByCity
+            options={locations}
+            selectedFilter={selectedFilter}
+            selectEventsByLocation={selectEventsByLocation}
+          ></FilterByCity>
+          <FilterByDate
+            options={dates}
+            selectedFilter={selectedFilter}
+            selectEventsByDate={selectEventsByDate}
+          ></FilterByDate>
+          <FilterByCat
+            options={categories}
+            selectedFilter={selectedFilter}
+            selectEventsByCat={selectEventsByCat}
+          ></FilterByCat>
+        </FilterContainer>
+      )}
+
+      <EventList
+        showBookmarked={showBookmarked}
+        onBookmark={handleBookmark}
+        selectedFilter={selectedFilter}
+        events={events}
+        updateEvents={updateEvents}
+      ></EventList>
     </main>
   );
 }
@@ -174,23 +196,29 @@ const Header = styled.header`
   background-color: lightgrey;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
-  padding: 0 2rem;
+  justify-content: space-around;
+`;
+
+const Logo = styled.div`
+  margin: 10px;
+  height: 2rem;
+  width: 10rem;
 `;
 
 const EventlistButton = styled.button`
   margin: 10px;
   height: 2rem;
-  background-color: darkgoldenrod;
-  color: white;
-  width: 10rem;
+  width: 15rem;
+  background-color: ${props => (props.isBookmarked === true ? 'grey' : 'blue')};
+  color: ${props => (props.isBookmarked === true ? 'darkgrey' : 'white')};
 `;
 
 const NavigationButton = styled.button`
   margin: 10px;
   height: 2rem;
-  width: 10rem;
-  color: grey;
+  width: 15rem;
+  background-color: ${props => (props.isBookmarked === true ? 'grey' : 'blue')};
+  color: ${props => (props.isBookmarked === true ? 'darkgrey' : 'white')};
 `;
 
 const FilterContainer = styled.div`
