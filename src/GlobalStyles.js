@@ -12,9 +12,8 @@ export default styled.createGlobalStyle`
     margin: 0;
     padding: 0;
     font-size: 1.125rem;
-    font-family: sans-serif;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
-
   button,
   input,
   textarea {

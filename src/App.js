@@ -1,4 +1,6 @@
 import {useState} from 'react';
+import {FaSearch} from 'react-icons/fa';
+import {FaBookmark} from 'react-icons/fa';
 import styled from 'styled-components';
 
 import EventList from './components/EventList';
@@ -154,10 +156,11 @@ export default function App() {
     <main className="App">
       <Header>
         <EventlistButton bookmarked={showBookmarked} onClick={() => setShowBookmarked(false)}>
-          Event List
+          <FaSearch></FaSearch>
         </EventlistButton>
+        <Logo>Event Xplorer</Logo>
         <NavigationButton bookmarked={showBookmarked} onClick={() => setShowBookmarked(true)}>
-          Bookmarks
+          <FaBookmark></FaBookmark>
         </NavigationButton>
       </Header>
       {!showBookmarked && (
@@ -191,29 +194,46 @@ export default function App() {
 }
 
 const Header = styled.header`
-  background-color: lightgrey;
+  background-color: crimson;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-evenly;
+`;
+
+const Logo = styled.div`
+  color: black;
+  letter-spacing: 1px;
+  margin: 10px;
+  height: 2.5rem;
+  width: 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bolder;
+  font-size: x-large;
+  text-shadow: 1.3px 1.3px white;
 `;
 
 const EventlistButton = styled.button`
   margin: 10px;
-  height: 2rem;
-  width: 15rem;
-  background-color: ${props => (props.bookmarked ? 'lightgrey' : 'blue')};
+  height: 2.5rem;
+  width: 3rem;
+  border-radius: 0.8rem;
+  background-color: ${props => (props.bookmarked ? 'lightgrey' : 'black')};
   color: ${props => (props.bookmarked ? 'grey' : 'white')};
 `;
 
 const NavigationButton = styled.button`
   margin: 10px;
-  height: 2rem;
-  width: 15rem;
-  background-color: ${props => (props.bookmarked ? 'blue' : 'lightgrey')};
+  height: 2.5rem;
+  width: 3rem;
+  border-radius: 0.8rem;
+  background-color: ${props => (props.bookmarked ? 'black' : 'lightgrey')};
   color: ${props => (props.bookmarked ? 'white' : 'grey')};
 `;
 
 const FilterContainer = styled.div`
   display: grid;
   grid-template-columns: 3;
+  border-bottom: double;
 `;
