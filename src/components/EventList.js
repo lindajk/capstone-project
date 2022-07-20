@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {FaRegBookmark} from 'react-icons/fa';
 import {FaBookmark} from 'react-icons/fa';
+import {GrLocationPin} from 'react-icons/gr';
 import styled from 'styled-components';
 
 export default function EventList({events, updateEvents, selectedFilter, onBookmark, showBookmarked}) {
@@ -64,11 +65,16 @@ export default function EventList({events, updateEvents, selectedFilter, onBookm
             <img src={event.image} alt="none" width="120" height="90"></img>
             <StyledListItemContainer>
               <StyledListItemEventName>{event.name}</StyledListItemEventName>
-              <StyledListItemCity>{event.city}</StyledListItemCity>
+              <StyledListItemCity>
+                {event.city}{' '}
+                <StyledListItemLocation>
+                  <GrLocationPin></GrLocationPin>
+                  {event.address}
+                </StyledListItemLocation>
+              </StyledListItemCity>
               <li>
                 {event.date} {event.time}
               </li>
-              <StyledListItemLocation>{event.address}</StyledListItemLocation>
               <StyledListItemSegment>Category: {event.category}</StyledListItemSegment>
             </StyledListItemContainer>
             <div onClick={() => onBookmark(event.id)}>
@@ -99,7 +105,7 @@ const StyledListItemContainer = styled.ul`
 `;
 
 const StyledListCard = styled.ul`
-  border: 1px solid #000;
+  border-bottom: double;
   display: grid;
   grid-template-columns: 120px 220px auto;
   margin: 0.2rem;
@@ -120,14 +126,18 @@ const StyledListItemEventName = styled.li`
 `;
 
 const StyledListItemCity = styled.li`
-  color: darkgoldenrod;
+  color: crimson;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `;
 
-const StyledListItemLocation = styled.li`
-  font-size: medium;
+const StyledListItemLocation = styled.span`
+  color: black;
 `;
 const StyledListItemSegment = styled.li`
   font-style: italic;
-  font-size: medium;
+  font-weight: lighter;
   color: grey;
 `;
