@@ -88,7 +88,7 @@ export default function App() {
       name: 'Music',
     },
     {
-      id: 4,
+      id: 5,
       name: 'Sports',
     },
   ];
@@ -156,7 +156,6 @@ export default function App() {
         <EventlistButton bookmarked={showBookmarked} onClick={() => setShowBookmarked(false)}>
           Event List
         </EventlistButton>
-        <Logo>EventNavi</Logo>
         <NavigationButton bookmarked={showBookmarked} onClick={() => setShowBookmarked(true)}>
           Bookmarks
         </NavigationButton>
@@ -180,7 +179,6 @@ export default function App() {
           ></FilterByCat>
         </FilterContainer>
       )}
-
       <EventList
         showBookmarked={showBookmarked}
         onBookmark={handleBookmark}
@@ -199,26 +197,20 @@ const Header = styled.header`
   justify-content: space-around;
 `;
 
-const Logo = styled.div`
-  margin: 10px;
-  height: 2rem;
-  width: 10rem;
-`;
-
 const EventlistButton = styled.button`
   margin: 10px;
   height: 2rem;
   width: 15rem;
-  background-color: ${props => (props.bookmarked ? 'grey' : 'blue')};
-  color: ${props => (props.bookmarked ? 'darkgrey' : 'white')};
+  background-color: ${props => (props.bookmarked ? 'lightgrey' : 'blue')};
+  color: ${props => (props.bookmarked ? 'grey' : 'white')};
 `;
 
 const NavigationButton = styled.button`
   margin: 10px;
   height: 2rem;
   width: 15rem;
-  background-color: ${props => (props.bookmarked ? 'blue' : 'grey')};
-  color: ${props => (props.bookmarked ? 'white' : 'darkgrey')};
+  background-color: ${props => (props.bookmarked ? 'blue' : 'lightgrey')};
+  color: ${props => (props.bookmarked ? 'white' : 'grey')};
 `;
 
 const FilterContainer = styled.div`
