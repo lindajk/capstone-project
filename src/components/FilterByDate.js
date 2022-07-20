@@ -24,8 +24,10 @@ export default function FilterByDate({selectedOption, selectEventsByDate, option
 const DropDownList = styled.select`
   background: white;
   text-align: center;
+  grid-column-start: 2;
 `;
 
 const ListItem = styled.option`
   list-style: none;
+  text-align: center;
 `;

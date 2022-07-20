@@ -28,4 +28,5 @@ const DropDownList = styled.select`
 
 const ListItem = styled.option`
   list-style: none;
+  text-align: center;
 `;

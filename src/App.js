@@ -22,6 +22,7 @@ export default function App() {
     },
   ]);
   const [events, setEvents] = useState([]);
+  const [showBookmarked, setShowBookmarked] = useState(false);
 
   const locations = [
     {
@@ -53,7 +54,7 @@ export default function App() {
   const dates = [
     {
       id: 1,
-      name: 'Upcoming Events',
+      name: 'All Dates',
     },
     {
       id: 2,
@@ -62,6 +63,10 @@ export default function App() {
     {
       id: 3,
       name: 'Tomorrow',
+    },
+    {
+      id: 4,
+      name: 'Day after Tomorrow',
     },
   ];
 
@@ -72,11 +77,19 @@ export default function App() {
     },
     {
       id: 2,
-      name: 'Music',
+      name: 'Arts & Theatre',
     },
     {
       id: 3,
       name: 'Miscellaneous',
+    },
+    {
+      id: 4,
+      name: 'Music',
+    },
+    {
+      id: 5,
+      name: 'Sports',
     },
   ];
 
@@ -101,6 +114,10 @@ export default function App() {
         return `${date.getFullYear()}-${
           (date.getMonth() + 1).toString().length > 1 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1).toString()
         }-${date.getDate() + 1}`;
+      } else if (dateToTranslate === 'Day after Tomorrow') {
+        return `${date.getFullYear()}-${
+          (date.getMonth() + 1).toString().length > 1 ? date.getMonth() + 1 : '0' + (date.getMonth() + 1).toString()
+        }-${date.getDate() + 2}`;
       } else {
         return dateToTranslate;
       }
@@ -108,7 +125,7 @@ export default function App() {
     const notToFilter = selectedFilter.filter(filterObject => filterObject.searchKey !== 'date');
     const newFilterArray = [
       ...notToFilter,
-      {searchKey: 'date', searchValue: actualDate === 'Upcoming Events' ? 'all' : actualDate},
+      {searchKey: 'date', searchValue: actualDate === 'All Dates' ? 'all' : actualDate},
     ];
     setSelectedFilter(newFilterArray);
   }
@@ -126,32 +143,77 @@ export default function App() {
     setEvents([...events, ...eventsToChoose]);
   }
 
+  function handleBookmark(idToBookmark) {
+    const index = events.findIndex(event => event.id === idToBookmark);
+    const eventToBookmark = events.find(event => event.id === idToBookmark);
+    const bookmarkedEvent = {...eventToBookmark, isBookmarked: !eventToBookmark.isBookmarked};
+    const newEvents = [...events.slice(0, index), bookmarkedEvent, ...events.slice(index + 1)];
+    setEvents(newEvents);
+  }
   return (
     <main className="App">
-      <FilterContainer>
-        <FilterByCity
-          options={locations}
-          selectedFilter={selectedFilter}
-          selectEventsByLocation={selectEventsByLocation}
-        ></FilterByCity>
-        <FilterByDate
-          options={dates}
-          selectedFilter={selectedFilter}
-          selectEventsByDate={selectEventsByDate}
-        ></FilterByDate>
-        <FilterByCat
-          options={categories}
-          selectedFilter={selectedFilter}
-          selectEventsByCat={selectEventsByCat}
-        ></FilterByCat>
-      </FilterContainer>
-      <EventList selectedFilter={selectedFilter} events={events} updateEvents={updateEvents}></EventList>
+      <Header>
+        <EventlistButton bookmarked={showBookmarked} onClick={() => setShowBookmarked(false)}>
+          Event List
+        </EventlistButton>
+        <NavigationButton bookmarked={showBookmarked} onClick={() => setShowBookmarked(true)}>
+          Bookmarks
+        </NavigationButton>
+      </Header>
+      {!showBookmarked && (
+        <FilterContainer>
+          <FilterByCity
+            options={locations}
+            selectedFilter={selectedFilter}
+            selectEventsByLocation={selectEventsByLocation}
+          ></FilterByCity>
+          <FilterByDate
+            options={dates}
+            selectedFilter={selectedFilter}
+            selectEventsByDate={selectEventsByDate}
+          ></FilterByDate>
+          <FilterByCat
+            options={categories}
+            selectedFilter={selectedFilter}
+            selectEventsByCat={selectEventsByCat}
+          ></FilterByCat>
+        </FilterContainer>
+      )}
+      <EventList
+        showBookmarked={showBookmarked}
+        onBookmark={handleBookmark}
+        selectedFilter={selectedFilter}
+        events={events}
+        updateEvents={updateEvents}
+      ></EventList>
     </main>
   );
 }
 
-const FilterContainer = styled.div`
-  width: 100%;
+const Header = styled.header`
+  background-color: lightgrey;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-around;
+`;
+
+const EventlistButton = styled.button`
+  margin: 10px;
+  height: 2rem;
+  width: 15rem;
+  background-color: ${props => (props.bookmarked ? 'lightgrey' : 'blue')};
+  color: ${props => (props.bookmarked ? 'grey' : 'white')};
+`;
+
+const NavigationButton = styled.button`
+  margin: 10px;
+  height: 2rem;
+  width: 15rem;
+  background-color: ${props => (props.bookmarked ? 'blue' : 'lightgrey')};
+  color: ${props => (props.bookmarked ? 'white' : 'grey')};
+`;
+
+const FilterContainer = styled.div`
+  display: grid;
+  grid-template-columns: 3;
 `;

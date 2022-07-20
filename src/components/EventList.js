@@ -1,7 +1,9 @@
 import {useEffect, useState} from 'react';
+import {FaRegBookmark} from 'react-icons/fa';
+import {FaBookmark} from 'react-icons/fa';
 import styled from 'styled-components';
 
-export default function EventList({events, updateEvents, selectedFilter}) {
+export default function EventList({events, updateEvents, selectedFilter, onBookmark, showBookmarked}) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [loadedPage, setLoadedPage] = useState(0);
@@ -41,10 +43,6 @@ export default function EventList({events, updateEvents, selectedFilter}) {
     fetchEvent(loadedPage);
   }, [loadedPage]);
 
-  const loadMoreEvents = () => {
-    fetchEvent(loadedPage);
-  };
-
   function filterArray(arrayToFilter, searchObjects = []) {
     return arrayToFilter.filter(data => {
       return searchObjects.every(
@@ -52,7 +50,9 @@ export default function EventList({events, updateEvents, selectedFilter}) {
       );
     });
   }
-  const filteredEvents = filterArray(events, selectedFilter);
+  const filteredEvents = showBookmarked
+    ? events.filter(event => event.isBookmarked)
+    : filterArray(events, selectedFilter);
 
   return (
     <StyledList role="list">
@@ -71,10 +71,12 @@ export default function EventList({events, updateEvents, selectedFilter}) {
               <StyledListItemLocation>{event.address}</StyledListItemLocation>
               <StyledListItemSegment>Category: {event.category}</StyledListItemSegment>
             </StyledListItemContainer>
+            <div onClick={() => onBookmark(event.id)}>
+              {event.isBookmarked ? <FaBookmark></FaBookmark> : <FaRegBookmark></FaRegBookmark>}
+            </div>
           </StyledListCard>
         );
       })}
-      <LoadMoreButton onClick={loadMoreEvents}>Weitere anzeigen</LoadMoreButton>
     </StyledList>
   );
 }
@@ -82,7 +84,6 @@ export default function EventList({events, updateEvents, selectedFilter}) {
 const StyledList = styled.ul`
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -91,6 +92,7 @@ const StyledList = styled.ul`
 const StyledListItemContainer = styled.ul`
   display: flex;
   flex-direction: column;
+  flex-wrap: wrap;
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -98,8 +100,8 @@ const StyledListItemContainer = styled.ul`
 
 const StyledListCard = styled.ul`
   border: 1px solid #000;
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: 120px 220px auto;
   margin: 0.2rem;
   padding: 0.2rem 2rem 0.2rem 0.2rem;
   img {
@@ -111,6 +113,10 @@ const StyledListCard = styled.ul`
 
 const StyledListItemEventName = styled.li`
   font-weight: bold;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
 `;
 
 const StyledListItemCity = styled.li`
@@ -124,9 +130,4 @@ const StyledListItemSegment = styled.li`
   font-style: italic;
   font-size: medium;
   color: grey;
-`;
-
-const LoadMoreButton = styled.button`
-  color: black;
-  padding: 0.5rem;
 `;
