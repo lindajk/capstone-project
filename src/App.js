@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {FaSearch} from 'react-icons/fa';
+import {BsMusicNoteList} from 'react-icons/bs';
 import {FaBookmark} from 'react-icons/fa';
 import styled from 'styled-components';
 
@@ -156,7 +156,7 @@ export default function App() {
     <main className="App">
       <Header>
         <EventlistButton bookmarked={showBookmarked} onClick={() => setShowBookmarked(false)}>
-          <FaSearch></FaSearch>
+          <BsMusicNoteList></BsMusicNoteList>
         </EventlistButton>
         <Logo>Event Xplorer</Logo>
         <NavigationButton bookmarked={showBookmarked} onClick={() => setShowBookmarked(true)}>
