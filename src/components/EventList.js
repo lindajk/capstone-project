@@ -10,7 +10,7 @@ export default function EventList({events, updateEvents, selectedFilter, onBookm
   const [loadedPage, setLoadedPage] = useState(0);
   const fetchEvent = page => {
     fetch(
-      `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=DE&page=${page}&sort=date,asc&apikey=5I30P7cDjRjyvGDo67WGAE2BhhTwRxXt`
+      `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=DE&page=${page}&sort=date,asc&apikey=5rZwKr2NiIK3bQnuq3GtAmAvCiv6NFvw`
     )
       .then(response => response.json())
       .then(data => {
@@ -66,7 +66,8 @@ export default function EventList({events, updateEvents, selectedFilter, onBookm
             <StyledListItemContainer>
               <StyledListItemEventName>{event.name}</StyledListItemEventName>
               <StyledListItemCity>
-                {event.city}{' '}
+                {event.city}
+                {''}
                 <StyledListItemLocation>
                   <GrLocationPin></GrLocationPin>
                   {event.address}
@@ -75,7 +76,7 @@ export default function EventList({events, updateEvents, selectedFilter, onBookm
               <li>
                 {event.date} {event.time}
               </li>
-              <StyledListItemSegment>Category: {event.category}</StyledListItemSegment>
+              <StyledListItemGenre>Genre: {event.category}</StyledListItemGenre>
             </StyledListItemContainer>
             <div onClick={() => onBookmark(event.id)}>
               {event.isBookmarked ? <FaBookmark></FaBookmark> : <FaRegBookmark></FaRegBookmark>}
@@ -95,26 +96,28 @@ const StyledList = styled.ul`
   padding: 0;
 `;
 
+const StyledListCard = styled.li`
+  border-bottom: 1px solid lightgrey;
+  display: grid;
+  grid-template-columns: 120px 220px auto;
+  margin: 0.2rem;
+  padding: 0.6rem 2rem 0.8rem 0.2rem;
+  img {
+    margin-top: 0.2rem;
+    padding: 0.2rem;
+    width: 120;
+    height: 90;
+  }
+  line-height: 25px;
+`;
+
 const StyledListItemContainer = styled.ul`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
   list-style-type: none;
-  margin: 0;
+  margin: 0 0.5rem;
   padding: 0;
-`;
-
-const StyledListCard = styled.ul`
-  border-bottom: double;
-  display: grid;
-  grid-template-columns: 120px 220px auto;
-  margin: 0.2rem;
-  padding: 0.2rem 2rem 0.2rem 0.2rem;
-  img {
-    padding: 0.2rem;
-    width: 120;
-    height: 90;
-  }
 `;
 
 const StyledListItemEventName = styled.li`
@@ -136,8 +139,9 @@ const StyledListItemCity = styled.li`
 const StyledListItemLocation = styled.span`
   color: black;
 `;
-const StyledListItemSegment = styled.li`
+const StyledListItemGenre = styled.li`
   font-style: italic;
   font-weight: lighter;
   color: grey;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 `;
