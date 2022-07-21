@@ -24,6 +24,8 @@ export default function FilterByCity({selectedOption, selectEventsByLocation, op
 const DropDownList = styled.select`
   background: white;
   text-align: center;
+  font-size: medium;
+  border: none;
 `;
 
 const ListItem = styled.option`

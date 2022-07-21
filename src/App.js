@@ -211,7 +211,7 @@ const Logo = styled.div`
   justify-content: center;
   font-weight: bolder;
   font-size: x-large;
-  text-shadow: 2px 2px black;
+  text-shadow: 2.5px 2.5px black;
 `;
 
 const EventlistButton = styled.button`
@@ -244,4 +244,5 @@ const FilterContainer = styled.div`
   display: grid;
   grid-template-columns: 3;
   height: 48px;
+  border-bottom: 1px solid lightgrey;
 `;

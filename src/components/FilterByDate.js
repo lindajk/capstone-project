@@ -25,6 +25,8 @@ const DropDownList = styled.select`
   background: white;
   text-align: center;
   grid-column-start: 2;
+  font-size: medium;
+  border: none;
 `;
 
 const ListItem = styled.option`
