@@ -75,7 +75,7 @@ export default function App() {
   const categories = [
     {
       id: 1,
-      name: 'All Categories',
+      name: 'All Genres',
     },
     {
       id: 2,
@@ -201,7 +201,7 @@ const Header = styled.header`
 `;
 
 const Logo = styled.div`
-  color: black;
+  color: white;
   letter-spacing: 1px;
   margin: 10px;
   height: 2.5rem;
@@ -211,7 +211,7 @@ const Logo = styled.div`
   justify-content: center;
   font-weight: bolder;
   font-size: x-large;
-  text-shadow: 1.3px 1.3px white;
+  text-shadow: 2px 2px black;
 `;
 
 const EventlistButton = styled.button`
@@ -221,6 +221,10 @@ const EventlistButton = styled.button`
   border-radius: 0.8rem;
   background-color: ${props => (props.bookmarked ? 'lightgrey' : 'black')};
   color: ${props => (props.bookmarked ? 'grey' : 'white')};
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const NavigationButton = styled.button`
@@ -230,10 +234,14 @@ const NavigationButton = styled.button`
   border-radius: 0.8rem;
   background-color: ${props => (props.bookmarked ? 'black' : 'lightgrey')};
   color: ${props => (props.bookmarked ? 'white' : 'grey')};
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const FilterContainer = styled.div`
   display: grid;
   grid-template-columns: 3;
-  border-bottom: double;
+  height: 48px;
 `;

@@ -95,7 +95,7 @@ const StyledList = styled.ul`
   padding: 0;
 `;
 
-const StyledListItemContainer = styled.ul`
+const StyledListItemContainer = styled.li`
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -105,7 +105,7 @@ const StyledListItemContainer = styled.ul`
 `;
 
 const StyledListCard = styled.ul`
-  border-bottom: double;
+  border-bottom: 1px solid lightgrey;
   display: grid;
   grid-template-columns: 120px 220px auto;
   margin: 0.2rem;
@@ -115,6 +115,7 @@ const StyledListCard = styled.ul`
     width: 120;
     height: 90;
   }
+  line-height: 25px;
 `;
 
 const StyledListItemEventName = styled.li`
