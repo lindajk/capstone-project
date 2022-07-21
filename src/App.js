@@ -136,7 +136,7 @@ export default function App() {
     const notToFilter = selectedFilter.filter(filterObject => filterObject.searchKey !== 'category');
     const newFilterArray = [
       ...notToFilter,
-      {searchKey: 'category', searchValue: selectedCat === 'All Categories' ? 'all' : selectedCat},
+      {searchKey: 'category', searchValue: selectedCat === 'All Genres' ? 'all' : selectedCat},
     ];
     setSelectedFilter(newFilterArray);
   }
