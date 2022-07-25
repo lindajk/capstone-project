@@ -1,6 +1,6 @@
 # Event Xplorer
 
-### An app for upcoming events in your city
+### An app for exploring upcoming events in your city
 
 The Event Xplorer App provides users with an overview of upcoming events in the city. Users can filter the event list by city, date and genre and bookmark all events that are interesting to them. 
 
