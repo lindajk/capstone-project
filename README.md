@@ -4,7 +4,7 @@
 
 The Event Xplorer App provides users with an overview of upcoming events in the city. Users can filter the event list by city, date and genre and bookmark all events that are interesting to them. 
 
-![app images](src/images/Event_Xplorer.png =828x1792)
+![app images](src/images/Event_Xplorer.png){:height="1792px" width="828px"}.
 
 ## Tech Stack
 
